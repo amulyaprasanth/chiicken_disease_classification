@@ -1,8 +1,10 @@
-from cnnClassifier import logger
-from cnnClassifier.pipelines.stage_01_data_ingestion import DataIngestionPipeline
-from cnnClassifier.pipelines.stage_02_prepare_base_model import PrepareBaseModelPipeline
-from cnnClassifier.pipelines.stage_03_model_training import ModelTrainingPipeline
 from cnnClassifier.pipelines.stage_04_model_evaluation import ModelEvaluationPipeline
+from cnnClassifier.pipelines.stage_03_model_training import ModelTrainingPipeline
+from cnnClassifier.pipelines.stage_02_prepare_base_model import PrepareBaseModelPipeline
+from cnnClassifier.pipelines.stage_01_data_ingestion import DataIngestionPipeline
+from cnnClassifier import logger
+import warnings
+warnings.filterwarnings('ignore')
 
 STAGE_NAME = "Data Ingestion Stage"
 

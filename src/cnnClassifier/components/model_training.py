@@ -31,8 +31,28 @@ class Training:
             batch_size=self.config.params_batch_size,
             image_size=(self.config.params_image_size[0], self.config.params_image_size[1]))
 
-        self.train_ds = train_ds.prefetch(tf.data.AUTOTUNE)
-        self.val_ds = val_ds.prefetch(tf.data.AUTOTUNE)
+        if self.config.params_is_augmentation:
+            train_aug = tf.keras.Sequential([
+                tf.keras.layers.Rescaling(scale=1.0 / 255),
+                tf.keras.layers.RandomFlip("horizontal_and_vertical"),
+                tf.keras.layers.RandomZoom(
+                    height_factor=(-0.05, -0.15),
+                    width_factor=(-0.05, -0.15)),
+                tf.keras.layers.RandomRotation(0.3)
+            ])
+
+            test_aug = tf.keras.Sequential([
+                tf.keras.layers.Rescaling(scale=1.0 / 255)
+            ])
+
+            self.train_ds = train_ds.map(lambda x, y: (train_aug(x), y),
+                                         num_parallel_calls=tf.data.AUTOTUNE).prefetch(tf.data.AUTOTUNE)
+            self.val_ds = val_ds.map(lambda x, y: (test_aug(x), y),
+                                     num_parallel_calls=tf.data.AUTOTUNE).prefetch(tf.data.AUTOTUNE)
+
+        else:
+            self.train_ds = train_ds.prefetch(tf.data.AUTOTUNE)
+            self.val_ds = val_ds.prefetch(tf.data.AUTOTUNE)
 
     def train(self):
         self.model.fit(
