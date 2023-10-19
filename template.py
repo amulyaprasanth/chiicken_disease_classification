@@ -21,8 +21,9 @@ list_of_files = [
     "params.yaml",
     "setup.py",
     "requirements.txt",
-    "research/trails.ipynb",
-    "templates/index.html"
+    "research/03.1_splitting_data.ipynb",
+    "templates/index.html",
+    "main.py"
     ]
 
 for filepath in list_of_files:
