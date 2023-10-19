@@ -1,3 +1,5 @@
+import os
+import shutil
 import tensorflow as tf
 from pathlib import Path
 import mlflow
@@ -45,6 +47,15 @@ class Evaluation:
 
             else:
                 mlflow.keras.log_model(self.model, "model")
+
+    def copy_model_for_deployment(self):
+        '''
+        This function copies the trained model file to  model folder to be used for deployment
+        '''
+        os.makedirs("./models", exist_ok=True)
+        shutil.copy(
+            src=self.config.trained_model_path,
+            dst=Path("./models"))
 
     def save_score(self):
         scores = {"loss": self.score[0], "accuracy": self.score[1]}

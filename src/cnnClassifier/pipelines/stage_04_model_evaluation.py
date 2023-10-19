@@ -15,6 +15,7 @@ class ModelEvaluationPipeline:
             evaluation_config = config.get_evaluation_config()
             evaluation = Evaluation(config=evaluation_config)
             evaluation.evaluate()
+            evaluation.copy_model_for_deployment()
             evaluation.log_into_mlflow()
         except Exception as e:
             raise e
