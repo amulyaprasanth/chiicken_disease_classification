@@ -3,6 +3,8 @@ from pathlib import Path
 from cnnClassifier.entity.config_entity import PrepareBaseModelConfig
 
 # %%
+
+
 class PrepareBaseModel:
     def __init__(self, config: PrepareBaseModelConfig):
         self.config = config
@@ -32,7 +34,8 @@ class PrepareBaseModel:
                 model.trainable = False
 
         flatten_in = tf.keras.layers.Flatten()(model.output)
-        prediction = tf.keras.layers.Dense(classes, activation="softmax")(flatten_in)
+        prediction = tf.keras.layers.Dense(
+            classes, activation="softmax")(flatten_in)
 
         full_model = tf.keras.models.Model(
             inputs=model.input,
@@ -40,7 +43,7 @@ class PrepareBaseModel:
         )
 
         full_model.compile(
-            loss=tf.keras.losses.CategoricalCrossentropy(),
+            loss=tf.keras.losses.SparseCategoricalCrossentropy(),
             optimizer=tf.keras.optimizers.SGD(learning_rate=learning_rate),
             metrics=["accuracy"]
         )
