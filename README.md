@@ -1,3 +1,4 @@
+[![Build Docker Container](https://github.com/amulyaprasanth/chiicken_disease_classification/actions/workflows/build.yml/badge.svg?event=deployment)](https://github.com/amulyaprasanth/chiicken_disease_classification/actions/workflows/build.yml)
 # End to End Chicken Disease Classification Deep Learning Project
 
 ### Project workflows
