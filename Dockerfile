@@ -1,10 +1,14 @@
+# Use the official Python 3.10 slim-buster image as the base image
 FROM python:3.10-slim-buster
 
-RUN apt update -y && apt install awscli -y
+# Set the working directory to /app
+WORKDIR /app
 
-COPY . ./app
+# Copy the local directory contents to the container at /app
+COPY . .
+
+# Install the Python dependencies from requirements.txt
 RUN pip install -r requirements.txt
-RUN pip install conda
-RUN conda install -c conda-forge cudatoolkit=11.2 cudnn=8.1.0
 
-CMD [ "python3", "app.py" ]
+# Specify the command to run your application
+CMD ["python3", "app.py"]
